@@ -8,4 +8,5 @@ Ablauf: Start, Raum und Dauer in Stunden, Tagungspauschale, Bestuhlung und Extra
 Preise (netto) stammen von alte-schraubenfabrik.de/tagungsraeume-mieten und /hotel (Stand 24.11.2026). Zusatzleistungen ohne Preis stehen als "auf Anfrage" im Angebot.
 Alle Preise und Texte stehen oben im Skript in `CONFIG`.
 
-Hinweis: Das PDF-Speichern nutzt die `downloads`-Funktion von claude.ai-Artifacts. Außerhalb davon wird eine Meldung gezeigt.
+Live: https://greenframes.github.io/event-planer/ (GitHub Pages, Branch `main`).
+Das PDF wird im Browser erzeugt und als normaler Download gespeichert. Die Angebote liegen nur im Browser (localStorage).

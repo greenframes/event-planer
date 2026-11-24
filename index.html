@@ -516,13 +516,15 @@ async function makePdf(){
   for (let i = 1; i <= n; i++){ doc.setPage(i); doc.setFontSize(8); doc.setTextColor(...mut); doc.text(`${CONFIG.firma} · ${S.nr} · Seite ${i}/${n}`, W/2, 290, {align:"center"}); }
   const blob = doc.output("blob");
   const name = `Tagungsangebot_${(S.kunde || "Kunde").replace(/[^\wäöüÄÖÜß-]+/g,"_")}_${S.nr}.pdf`;
-  try {
-    const dl = await claude.use("downloads");
-    if (!dl) throw { code:"unavailable" };
-    await dl.save({ filename:name, data:blob });
+  let dl = null;
+  try { dl = window.claude && await claude.use("downloads"); } catch(e){}
+  if (dl){
+    try { await dl.save({ filename:name, data:blob }); toast("PDF gespeichert"); }
+    catch(e){ toast(e && e.code === "declined" ? "Speichern abgebrochen." : "PDF konnte nicht gespeichert werden."); }
+  } else {
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     toast("PDF gespeichert");
-  } catch(e){
-    toast(e && e.code === "declined" ? "Speichern abgebrochen." : "PDF-Download ist in dieser Ansicht nicht verfügbar. Bitte die Seite im Browser öffnen.");
   }
 }
 
